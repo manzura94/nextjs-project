@@ -1,0 +1,49 @@
+.flyout_container {
+    position: absolute;
+    z-index: 999;
+    right: 50px;
+    bottom: 50px;
+    width: 20%;
+    min-height: 100px;
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    border: 1px solid #2727273d;
+}
+
+.dark {
+    background: rgb(24, 24, 24);
+    border: 1px solid white;
+    color: white;
+}
+
+.flyout_items {
+    font-size: 20px;
+    font-style: italic;
+}
+
+.flyout_buttons {
+    margin: 20px 0;
+    display: flex;
+    gap: 30px;
+}
+
+.button {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.light {
+    border: 1px solid black;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.dark {
+    background: rgb(24, 24, 24);
+    border: 1px solid white;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+}
