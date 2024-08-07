@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import React from 'react';
 import { useThemeContext } from '../contexts/ThemeContext';
 import styles from './Pagination.module.css';
 

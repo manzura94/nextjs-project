@@ -1,4 +1,5 @@
 import { AppProps, AppContext } from 'next/app';
+import React from 'react';
 import { ThemeProvider } from '../contexts/ThemeContext';
 import '../styles/globals.css';
 

@@ -1,6 +1,7 @@
-import React from 'react';
 import styles from './Header.module.css';
 import { useThemeContext } from '../contexts/ThemeContext';
+import React from 'react';
+
 
 export const Header = () => {
     const { theme, toggleTheme } = useThemeContext();

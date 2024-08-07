@@ -23,11 +23,9 @@ export const BookList: React.FC<Books> = ({ books, menu, setMenu, selectedItem, 
         }
     };
 
-
-
     useEffect(() => {
         setMenu(books);
-    }, [books,setMenu]);
+    }, [books, setMenu]);
 
     if (!menu.length) return <h1 className={styles[theme]}>Loading...</h1>;
 
