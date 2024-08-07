@@ -1,95 +1,52 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
+import React, { useState, useEffect } from 'react';
+import { BookList } from './components/BookList';
+import { Header } from './components/Header';
+import { Pagination } from './components/Pagination';
+import Flyout from './components/Flyout';
+import { useThemeContext } from './contexts/ThemeContext';
+import styles from './page.module.css';
+
+export interface Book {
+    uid: string;
+    title: string;
+    numberOfPages: number;
+    publishedMonth: number;
+    publishedYear: number;
+}
 
 export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    const { theme } = useThemeContext();
+    const [books, setBooks] = useState<Book[]>([]);
+    const [menu, setMenu] = useState<Book[]>([]);
+    const [selectedItem, setSelectedItem] = useState<Book[]>([]);
+    const [currentPage, setCurrentPage] = useState<number>(1);
+
+    console.log(theme);
+
+    useEffect(() => {
+        const fetchBooks = async (page: number) => {
+            try {
+                const response = await fetch(`/api/books?page=${page}`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+                const data = await response.json();
+                setBooks(data.books);
+            } catch (error) {
+                console.error('Error fetching books:', error);
+            }
+        };
+
+        fetchBooks(currentPage);
+    }, [currentPage]);
+
+    return (
+        <div className={`${styles.wrapper} ${styles[theme]}`}>
+            <Header />
+            <BookList books={books} menu={menu} setMenu={setMenu} selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
+            <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
+            {selectedItem.length ? <Flyout selectedItem={selectedItem} setSelectedItem={setSelectedItem} /> : <span></span>}
         </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+    );
 }
