@@ -1,0 +1,13 @@
+.wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background: rgb(248, 247, 247);
+    position: relative;
+}
+
+.dark {
+    background-color: rgb(27, 27, 27);
+}
