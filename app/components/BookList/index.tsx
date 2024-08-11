@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Book, Books } from '../../types/types';
 import { useThemeContext } from '../../contexts/ThemeContext';
 import styles from './styles.module.css';
 
-export const BookList: React.FC<Books> = ({ books, menu, setMenu, selectedItem, setSelectedItem }) => {
+export const BookList: React.FC<Books> = ({  menu, selectedItem, setSelectedItem }) => {
     const { theme } = useThemeContext();
 
     const handleClickItem = (book: Book) => {
@@ -15,17 +15,13 @@ export const BookList: React.FC<Books> = ({ books, menu, setMenu, selectedItem, 
         }
     };
 
-    useEffect(() => {
-        setMenu(books);
-    }, [books, setMenu]);
-
     if (!menu.length) return <h1 className={styles[theme]}>Loading...</h1>;
 
     return (
         <div className={styles.books_container} data-testid='book-list-container'>
             {menu &&
                 menu.slice(0, 9).map((item) => (
-                    <div className={`${styles.books_wrapper} ${styles[theme]}`} key={item.uid} onClick={() => handleClickItem(item)}>
+                    <div data-testid="book-item" className={`${styles.books_wrapper} ${styles[theme]}`} key={item.uid} onClick={() => handleClickItem(item)}>
                         <input type='checkbox' checked={selectedItem.includes(item)} readOnly />
                         <h3 className={styles.books_title}>{item?.title}</h3>
                         <div className={styles.books_date}>

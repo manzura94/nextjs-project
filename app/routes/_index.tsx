@@ -8,6 +8,8 @@ import { Pagination } from '../components/Pagination';
 import Flyout from '../components/Flyout';
 import { getBooks } from '../utils/api';
 import { Book } from '../types/types';
+import '../styles/global.css';
+import { useThemeContext } from '../contexts/ThemeContext';
 
 export const meta: MetaFunction = () => {
     return [{ title: 'Book store' }, { name: 'description', content: 'Welcome to Remix!' }];
@@ -21,19 +23,20 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 export default function Index() {
-    const { books, page } = useLoaderData<{ books: Book[]; page: number }>();
+    const { books } = useLoaderData<{ books: Book[]; page: number }>();
     const [menu, setMenu] = useState<Book[]>([]);
     const [selectedItem, setSelectedItem] = useState<Book[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const { theme } = useThemeContext();
 
     useEffect(() => {
         setMenu(books);
     }, [books]);
 
     return (
-        <div>
+        <div className={`main_wrapper ${theme}`}>
             <Header />
-            <BookList books={books} menu={menu} setMenu={setMenu} selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
+            <BookList  menu={menu} selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
             <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
             {selectedItem.length ? <Flyout selectedItem={selectedItem} setSelectedItem={setSelectedItem} /> : null}
         </div>

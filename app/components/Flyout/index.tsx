@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useThemeContext } from '../../contexts/ThemeContext';
 import { Props } from '../../types/types';
 import styles from './styles.module.css';
 
 const Flyout = ({ selectedItem, setSelectedItem }: Props) => {
     const { theme } = useThemeContext();
+    const [url, setUrl] = useState<string | undefined>(undefined);
 
     const handleRemoveItem = () => {
         setSelectedItem([]);
     };
 
-    const [url, setUrl] = useState<string>();
     const handleDownload = () => {
         if (selectedItem.length === 0) return;
 
@@ -26,12 +26,26 @@ const Flyout = ({ selectedItem, setSelectedItem }: Props) => {
         });
 
         const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        setUrl(url);
+        const newUrl = URL.createObjectURL(blob);
+        setUrl(newUrl);
     };
 
+    useEffect(() => {
+        return () => {
+            if (url) {
+                URL.revokeObjectURL(url);
+            }
+        };
+    }, [url]);
+
+    useEffect(() => {
+        if (selectedItem.length > 0) {
+            handleDownload();
+        }
+    }, [selectedItem]);
+
     return (
-        <div className={`${styles.flyout_container} ${styles[theme]}`}>
+        <div className={`${styles.flyout_container} ${styles[theme]}`} data-testid='flyout'>
             <div className={styles.flyout_items}>{`selected ${selectedItem.length} ${selectedItem.length > 1 ? 'items' : 'item'}`}</div>
             <div className={styles.flyout_buttons}>
                 <button className={`${styles.button} ${styles[theme]}`} onClick={handleRemoveItem}>

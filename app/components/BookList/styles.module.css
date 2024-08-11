@@ -19,6 +19,14 @@
     box-shadow: 5px 10px #8888881d;
 }
 
+.books_date {
+    padding: 5px 0;
+}
+
+.books_title {
+    padding-top: 10px;
+}
+
 .dark {
     box-shadow: 5px 10px #d1d1d157;
     background: rgba(96, 96, 96, 0.498);

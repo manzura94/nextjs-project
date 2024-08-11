@@ -7,9 +7,8 @@ export interface Book {
 }
 
 export interface Books {
-    books: Book[];
     menu: Book[];
-    setMenu: React.Dispatch<React.SetStateAction<Book[]>>;
+
     selectedItem: Book[];
     setSelectedItem: React.Dispatch<React.SetStateAction<Book[] | []>>;
 }
@@ -19,7 +18,7 @@ export interface PageProps {
     setCurrentPage: (page: number) => void;
 }
 
-export interface Props  {
+export interface Props {
     selectedItem: Book[];
     setSelectedItem: React.Dispatch<React.SetStateAction<Book[] | []>>;
-};
+}
