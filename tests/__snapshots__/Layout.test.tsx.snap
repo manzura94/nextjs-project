@@ -1,9 +1,0 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`App Component > should render Outlet inside ThemeProvider 1`] = `
-<div>
-  <div>
-    Outlet Content
-  </div>
-</div>
-`;
