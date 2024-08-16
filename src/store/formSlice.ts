@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-interface FormData {
+export interface FormData {
   name: string
   age: number
   email: string
@@ -8,7 +8,8 @@ interface FormData {
   confirmPassword: string
   gender: string
   terms: boolean
-  picture: File | null
+  picture: string | undefined
+  country: string
 }
 
 interface FormState {
