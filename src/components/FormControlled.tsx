@@ -1,12 +1,23 @@
-import React from 'react'
-import { useForm, Controller } from 'react-hook-form'
+import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { addControlledData } from '../store/formSlice'
+import { addControlledData, FormData } from '../store/formSlice'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { validationSchema } from '../validation'
 import { RootState } from '../store'
 import { useNavigate } from 'react-router'
 import '../styles/Form.css'
+
+interface RawFormData {
+  name: string;
+  age: number;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  gender: string;
+  terms?: boolean;
+  picture: FileList;  
+  country: string;
+}
 
 export const FormControlled = () => {
   const dispatch = useDispatch()
@@ -22,7 +33,7 @@ export const FormControlled = () => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<RawFormData>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
       name: '',
@@ -39,27 +50,52 @@ export const FormControlled = () => {
     reValidateMode: 'onChange',
   })
 
-  const onSubmit = (data) => {
-    const reader = new FileReader()
-    reader.onloadend = () => {
-      data.picture = reader.result
-      dispatch(addControlledData(data))
-      navigate('/')
+  // const onSubmit = (data) => {
+  //   const reader = new FileReader()
+  //   reader.onloadend = () => {
+  //     data.picture = reader.result
+  //     dispatch(addControlledData(data))
+  //     navigate('/')
+  //   }
+  //   reader.readAsDataURL(data.picture[0])
+  // }
+
+  const onSubmit: SubmitHandler<RawFormData> = (data) => {
+    const formData: FormData = {
+      ...data,
+      picture: null, 
+    };
+
+    if (data.picture && data.picture.length > 0) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (typeof reader.result === 'string') {
+          formData.picture = reader.result;
+          dispatch(addControlledData(formData));
+          navigate('/');
+        }
+      };
+      reader.readAsDataURL(data.picture[0]);
+    } else {
+      dispatch(addControlledData(formData));
+      navigate('/');
     }
-    reader.readAsDataURL(data.picture[0])
-  }
+
+  };
+
+  
+  
 
   console.log(errors)
 
   return (
-      <div className="form_wrapper">
-          
+    <div className="form_wrapper">
       <form onSubmit={handleSubmit(onSubmit)} className="form_container">
         <Controller
           name="name"
           control={control}
           render={({ field }) => (
-            <div className='form_wrap'>
+            <div className="form_wrap">
               {errors.name && (
                 <span className="form_error">{errors.name.message}</span>
               )}
@@ -74,23 +110,22 @@ export const FormControlled = () => {
           name="age"
           control={control}
           render={({ field }) => (
-            <div className='form_wrap'>
-              {errors.age && (
-                <span className="form_error">{errors.age.message}</span>
-              )}
+            <div className="form_wrap">
               <label className="form_label" htmlFor="age">
                 Age:
               </label>
               <input type="number" {...field} className="form_input" id="age" />
+              {errors.age && (
+                <span className="form_error">{errors.age.message}</span>
+              )}
             </div>
           )}
         />
-              <Controller
-                
+        <Controller
           name="email"
           control={control}
           render={({ field }) => (
-            <div className='form_wrap'>
+            <div className="form_wrap">
               <label className="form_label" htmlFor="email">
                 Email:
               </label>
@@ -110,7 +145,7 @@ export const FormControlled = () => {
           name="password"
           control={control}
           render={({ field }) => (
-            <div className='form_wrap'>
+            <div className="form_wrap">
               <label className="form_label" htmlFor="password">
                 Password:
               </label>
@@ -130,7 +165,7 @@ export const FormControlled = () => {
           name="confirmPassword"
           control={control}
           render={({ field }) => (
-            <div className='form_wrap'>
+            <div className="form_wrap">
               <label htmlFor="confirmPassword" className="form_label">
                 Confirm Password:
               </label>
@@ -152,7 +187,7 @@ export const FormControlled = () => {
           name="gender"
           control={control}
           render={({ field }) => (
-            <div className='form_special-wrap gender_container'>
+            <div className="form_special-wrap gender_container">
               <label htmlFor="gender" className="form_label">
                 Gender:
               </label>
@@ -163,7 +198,9 @@ export const FormControlled = () => {
                 <option value="other">Other</option>
               </select>
               {errors.gender && (
-                <span className="form_gender-error">{errors.gender.message}</span>
+                <span className="form_gender-error">
+                  {errors.gender.message}
+                </span>
               )}
             </div>
           )}
@@ -172,7 +209,7 @@ export const FormControlled = () => {
           name="country"
           control={control}
           render={({ field }) => (
-            <div className='form_wrap'>
+            <div className="form_wrap">
               <label htmlFor="country" className="form_label">
                 Country:
               </label>
@@ -198,21 +235,23 @@ export const FormControlled = () => {
           name="picture"
           control={control}
           render={({ field }) => (
-            <div className='form_special-wrap'>
+            <div className="form_special-wrap">
               <label htmlFor="picture" className="form_label picture_label">
                 Picture:
-              <input
-                id="picture"
-                type="file"
-                accept="image/png, image/jpeg"
-                onChange={(e) => {
+                <input
+                  id="picture"
+                  type="file"
+                  accept="image/png, image/jpeg"
+                  onChange={(e) => {
                     field.onChange(e.target.files)
-                }}
-                onBlur={field.onBlur}
+                  }}
+                  onBlur={field.onBlur}
                 />
-                </label>
+              </label>
               {errors.picture && (
-                <span className="form_picture-error">{errors.picture.message}</span>
+                <span className="form_picture-error">
+                  {errors.picture.message}
+                </span>
               )}
             </div>
           )}
@@ -220,24 +259,26 @@ export const FormControlled = () => {
         <Controller
           name="terms"
           control={control}
-                  render={({ field }) => (
-              <div className='form_special-wrap terms_container'>
-            <label htmlFor="terms" className="form_checklabel">
-              Accept Terms and Conditions:
-              <input
-                id="terms"
-                type="checkbox"
-                name={field.name}
-                onChange={(e) => {
+          render={({ field }) => (
+            <div className="form_special-wrap terms_container">
+              <label htmlFor="terms" className="form_checklabel">
+                Accept Terms and Conditions:
+                <input
+                  id="terms"
+                  type="checkbox"
+                  name={field.name}
+                  onChange={(e) => {
                     field.onChange(e.target.checked)
-                }}
-                onBlur={field.onBlur}
+                  }}
+                  onBlur={field.onBlur}
                 />
-              {errors.terms && (
-                  <span className="form_terms-error">{errors.terms.message}</span>
-                  )}
-            </label>
-                  </div>
+                {errors.terms && (
+                  <span className="form_terms-error">
+                    {errors.terms.message}
+                  </span>
+                )}
+              </label>
+            </div>
           )}
         />
 

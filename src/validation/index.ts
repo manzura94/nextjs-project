@@ -5,8 +5,9 @@ export const validation = Yup.object().shape({
     .matches(/^[A-Z]/, 'First letter must be uppercase')
     .required('Name is required'),
   age: Yup.number()
+    .required('Age is required')
     .positive('Age must be positive')
-    .required('Age is required'),
+    .integer('Age must be an integer'),
   email: Yup.string().email('Invalid email').required('Email is required'),
   password: Yup.string()
     .matches(
@@ -23,8 +24,8 @@ export const validation = Yup.object().shape({
     .required('Terms must be accepted'),
   picture: Yup.mixed()
     .nullable()
-    .test('fileType', 'Unsupported File Format', (value) => {
-      if (!value) return true
+    .test('fileType', (value) => {
+      // if (!value) return true
       return (
         typeof value === 'string' &&
         (value.startsWith('data:image/jpeg') ||
@@ -58,12 +59,16 @@ export const validationSchema = Yup.object().shape({
     .required('Confirm Password is required'),
   gender: Yup.string().required('Gender is required'),
   country: Yup.string().required('Country is required'),
-  picture: Yup.mixed()
-    .test('fileSize', 'The file is too large', (value) => {
-      return value && value[0].size <= 2000000
-    })
-    .test('fileType', 'Unsupported File Format', (value) => {
-      return value && ['image/jpeg', 'image/png'].includes(value[0].type)
-    }),
+  picture:Yup.mixed<FileList>().required('Picture is required'),
+  // picture: Yup.mixed()
+  //   .test('fileSize', 'Picture is required', (value) => {
+  //     if (!value || !(value as File[])[0]) return false
+  //     return (value as File[])[0].size <= 2000000
+  //   })
+  //   .test('fileType', 'Unsupported File Format', (value) => {
+  //     if (!value || !(value as File[])[0]) return false
+  //     return ['image/jpeg', 'image/png'].includes((value as File[])[0].type)
+  //   }),
+
   terms: Yup.bool().oneOf([true], 'Terms must be accepted'),
 })

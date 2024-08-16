@@ -32,14 +32,14 @@ export const FormUncontrolled = () => {
 
     const data: FormData = {
       name: nameRef.current?.value || '',
-      age: Number(ageRef.current?.value || undefined),
+      age: Number(ageRef.current?.value || null),
       email: emailRef.current?.value || '',
       password: passwordRef.current?.value || '',
       confirmPassword: confirmPasswordRef.current?.value || '',
       gender: genderRef.current?.value || '',
       terms: termsRef.current?.checked || false,
       country: countryRef.current?.value || '',
-      picture: '',
+      picture: pictureRef.current?.value || '',
     }
 
     if (pictureRef.current?.files && pictureRef.current.files.length > 0) {
@@ -85,66 +85,91 @@ export const FormUncontrolled = () => {
 
   return (
     <div className="form_wrapper">
-      <form onSubmit={handleFormSumbit}>
-        <div>
-          <label htmlFor="name">Name:</label>
+      <form onSubmit={handleFormSumbit} className="form_container">
+        <div className="form_wrap">
+          {errors.name && <span className="form_error">{errors.name}</span>}
+          <label className="form_label" htmlFor="name">
+            Name:
+          </label>
           <input
             type="text"
             id="name"
             ref={nameRef}
             name="name"
             autoComplete="name"
+            className="form_input"
           />
-          {errors.name && <span>{errors.name.toLowerCase()}</span>}
         </div>
-        <div>
-          <label htmlFor="age">Age:</label>
+        <div className="form_wrap">
+          {errors.age && (
+            <span className="form_error">{errors.age.toLowerCase()}</span>
+          )}
+          <label className="form_label" htmlFor="age">
+            Age:
+          </label>
           <input
             type="number"
             id="age"
             ref={ageRef}
             name="age"
             autoComplete="age"
+            className="form_input"
           />
-          {errors.age && <span>{errors.age.toLowerCase()}</span>}
         </div>
-        <div>
-          <label htmlFor="email">Email:</label>
+        <div className="form_wrap">
+          <label className="form_label" htmlFor="email">
+            Email:
+          </label>
           <input
             type="email"
             id="email"
             ref={emailRef}
             name="email"
             autoComplete="email"
+            className="form_input"
           />
-          {errors.email && <span>{errors.email.toLowerCase()}</span>}
+          {errors.email && (
+            <span className="form_error">{errors.email.toLowerCase()}</span>
+          )}
         </div>
-        <div>
-          <label htmlFor="password">Password:</label>
+        <div className="form_wrap">
+          <label className="form_label" htmlFor="password">
+            Password:
+          </label>
           <input
             type="password"
             id="password"
             ref={passwordRef}
             name="password"
             autoComplete="new-password"
+            className="form_input"
           />
-          {errors.password && <span>{errors.password.toLowerCase()}</span>}
+          {errors.password && (
+            <span className="form_error">{errors.password.toLowerCase()}</span>
+          )}
         </div>
-        <div>
-          <label htmlFor="confirmPassword">Confirm Password:</label>
+        <div className="form_wrap">
+          <label className="form_label" htmlFor="confirmPassword">
+            Confirm Password:
+          </label>
           <input
             type="password"
             id="confirmPassword"
             ref={confirmPasswordRef}
             name="confirmPassword"
             autoComplete="new-password"
+            className="form_input"
           />
           {errors.confirmPassword && (
-            <span>{errors.confirmPassword.toLowerCase()}</span>
+            <span className="form_error">
+              {errors.confirmPassword.toLowerCase()}
+            </span>
           )}
         </div>
-        <div>
-          <label htmlFor="country">Country:</label>
+        <div className="form_wrap">
+          <label className="form_label" htmlFor="country">
+            Country:
+          </label>
           <input
             type="text"
             id="country"
@@ -152,37 +177,58 @@ export const FormUncontrolled = () => {
             list="country-list"
             ref={countryRef}
             autoComplete="country"
+            className="form_input"
           />
           <datalist id="country-list">
             {countries.map((country) => (
               <option key={country} value={country} />
             ))}
           </datalist>
-          {errors.country && <span>{errors.country.toLowerCase()}</span>}
+          {errors.country && (
+            <span className="form_error">{errors.country.toLowerCase()}</span>
+          )}
         </div>
-        <div>
-          <label htmlFor="gender">Gender:</label>
+        <div className="form_special-wrap gender_container">
+          <label className="form_label" htmlFor="gender">
+            Gender:
+          </label>
           <select id="gender" ref={genderRef} name="gender" autoComplete="sex">
             <option value="">Select Gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
             <option value="other">Other</option>
           </select>
-          {errors.gender && <span>{errors.gender.toLowerCase()}</span>}
+          {errors.gender && (
+            <span className="form_gender-error">
+              {errors.gender.toLowerCase()}
+            </span>
+          )}
         </div>
-        <div>
-          <label htmlFor="terms">
+        <div className="form_special-wrap">
+          <label className="form_label picture_label" htmlFor="picture">
+            Picture:
+            <input type="file" id="picture" ref={pictureRef} name="picture" />
+          </label>
+          {errors.picture && (
+            <span className="form_picture-error">
+              {errors.picture.toLowerCase()}
+            </span>
+          )}
+        </div>
+        <div className="form_special-wrap terms_container">
+          <label className="form_checklabel" htmlFor="terms">
             Accept Terms and Conditions:
             <input type="checkbox" id="terms" ref={termsRef} name="terms" />
           </label>
-          {errors.terms && <span>{errors.terms.toLowerCase()}</span>}
+          {errors.terms && (
+            <span className="form_terms-error">
+              {errors.terms.toLowerCase()}
+            </span>
+          )}
         </div>
-        <div>
-          <label htmlFor="picture">Picture:</label>
-          <input type="file" id="picture" ref={pictureRef} name="picture" />
-          {errors.picture && <span>{errors.picture.toLowerCase()}</span>}
-        </div>
-        <button type="submit">Submit</button>
+        <button className="form_button" type="submit">
+          Submit
+        </button>
       </form>
     </div>
   )
