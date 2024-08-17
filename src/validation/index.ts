@@ -59,16 +59,6 @@ export const validationSchema = Yup.object().shape({
     .required('Confirm Password is required'),
   gender: Yup.string().required('Gender is required'),
   country: Yup.string().required('Country is required'),
-  picture:Yup.mixed<FileList>().required('Picture is required'),
-  // picture: Yup.mixed()
-  //   .test('fileSize', 'Picture is required', (value) => {
-  //     if (!value || !(value as File[])[0]) return false
-  //     return (value as File[])[0].size <= 2000000
-  //   })
-  //   .test('fileType', 'Unsupported File Format', (value) => {
-  //     if (!value || !(value as File[])[0]) return false
-  //     return ['image/jpeg', 'image/png'].includes((value as File[])[0].type)
-  //   }),
-
+  picture: Yup.mixed<FileList>().required('Picture is required'),
   terms: Yup.bool().oneOf([true], 'Terms must be accepted'),
 })

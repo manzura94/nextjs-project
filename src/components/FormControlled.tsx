@@ -8,15 +8,15 @@ import { useNavigate } from 'react-router'
 import '../styles/Form.css'
 
 interface RawFormData {
-  name: string;
-  age: number;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  gender: string;
-  terms?: boolean;
-  picture: FileList;  
-  country: string;
+  name: string
+  age: number
+  email: string
+  password: string
+  confirmPassword: string
+  gender: string
+  terms?: boolean
+  picture: FileList
+  country: string
 }
 
 export const FormControlled = () => {
@@ -50,41 +50,27 @@ export const FormControlled = () => {
     reValidateMode: 'onChange',
   })
 
-  // const onSubmit = (data) => {
-  //   const reader = new FileReader()
-  //   reader.onloadend = () => {
-  //     data.picture = reader.result
-  //     dispatch(addControlledData(data))
-  //     navigate('/')
-  //   }
-  //   reader.readAsDataURL(data.picture[0])
-  // }
-
   const onSubmit: SubmitHandler<RawFormData> = (data) => {
     const formData: FormData = {
       ...data,
-      picture: null, 
-    };
-
-    if (data.picture && data.picture.length > 0) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (typeof reader.result === 'string') {
-          formData.picture = reader.result;
-          dispatch(addControlledData(formData));
-          navigate('/');
-        }
-      };
-      reader.readAsDataURL(data.picture[0]);
-    } else {
-      dispatch(addControlledData(formData));
-      navigate('/');
+      picture: undefined,
     }
 
-  };
-
-  
-  
+    if (data.picture && data.picture.length > 0) {
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        if (typeof reader.result === 'string') {
+          formData.picture = reader.result
+          dispatch(addControlledData(formData))
+          navigate('/')
+        }
+      }
+      reader.readAsDataURL(data.picture[0])
+    } else {
+      dispatch(addControlledData(formData))
+      navigate('/')
+    }
+  }
 
   console.log(errors)
 

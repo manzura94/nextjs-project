@@ -8,7 +8,7 @@ export interface FormData {
   confirmPassword: string
   gender: string
   terms?: boolean
-  picture?: string | null | undefined
+  picture?: string | undefined
   country: string
 }
 

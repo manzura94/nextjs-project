@@ -1,11 +1,16 @@
-import React from 'react'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { ControlledForm } from '../components/ControlledForm'
 import { UncontrolledForm } from '../components/UncontrolledForm'
+import { RootState } from '../store'
 import '../styles/Main.css'
 
 export const Main = () => {
   const navigate = useNavigate()
+  const { controlled, uncontrolled } = useSelector(
+    (state: RootState) => state.form,
+  )
+  console.log(controlled, uncontrolled)
 
   return (
     <div className="main_container">
@@ -16,14 +21,26 @@ export const Main = () => {
           onClick={() => navigate('/form-controlled')}
         >
           <h2 className="form_title">Controlled Form</h2>
-          <ControlledForm />
+          {controlled?.length ? (
+            <div className="form_wrap-container">
+              <ControlledForm />
+            </div>
+          ) : (
+            <p className="form_paragraph">No controlled form available yet</p>
+          )}
         </div>
         <div
           className="uncontrolled_form form"
           onClick={() => navigate('/form-uncontrolled')}
         >
           <h2 className="form_title">Uncontrolled Form</h2>
-          <UncontrolledForm />
+          {uncontrolled?.length ? (
+            <div className="form_wrap-container">
+              <UncontrolledForm />
+            </div>
+          ) : (
+            <p className="form_paragraph">No uncontrolled form available yet</p>
+          )}
         </div>
       </div>
     </div>

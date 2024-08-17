@@ -1,4 +1,3 @@
-import React from 'react'
 import { useNavigate } from 'react-router'
 import { FormControlled } from '../components/FormControlled'
 import '../styles/pages.css'
