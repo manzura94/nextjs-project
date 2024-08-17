@@ -1,7 +1,7 @@
-import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router'
-import { ControlledForm } from '../components/ControlledForm'
 import { UncontrolledForm } from '../components/UncontrolledForm'
+import { ControlledForm } from '../components/ControlledForm'
+import { useNavigate } from 'react-router'
+import { useSelector } from 'react-redux'
 import { RootState } from '../store'
 import '../styles/Main.css'
 

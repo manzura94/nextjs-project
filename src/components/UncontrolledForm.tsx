@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
+import { resetLastAddedTimestamp } from "../store/formSlice";
 import '../styles/Results.css'
 
 export const UncontrolledForm = () => {
+  const dispatch = useDispatch()
   const uncontrolled = useSelector((state: RootState) => state.form.uncontrolled)
   const lastAddedTimestamp = useSelector((state: RootState) => state.form.lastAddedTimestamp);
   const [highlightedIndex, setHighlightedIndex] = useState<number | null>(null);
@@ -22,10 +24,11 @@ export const UncontrolledForm = () => {
       setHighlightedIndex(index);
       const timeout = setTimeout(() => {
         setHighlightedIndex(null);
-      }, 10000);
+        dispatch(resetLastAddedTimestamp());
+      }, 5000);
       return () => clearTimeout(timeout);
     }
-  }, [lastAddedTimestamp, uncontrolled])
+  }, [lastAddedTimestamp, uncontrolled, dispatch])
 
   return  <table className="customers">
   <tr>
@@ -38,7 +41,7 @@ export const UncontrolledForm = () => {
   </tr>
   {uncontrolled.map((item, index) => {
     return (
-      <tr key={index} className={`${highlightedIndex === index && 'newItem_added'}`}>
+      <tr key={index} className={`${highlightedIndex === index ? 'newItem_added' : ''}`}>
         <td >
 
           <img className='table_img' src={item.picture} alt="picture" />

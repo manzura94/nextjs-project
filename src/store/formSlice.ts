@@ -32,15 +32,20 @@ const formSlice = createSlice({
   initialState,
   reducers: {
     addUncontrolledData: (state, action: PayloadAction<FormData>) => {
-      state.uncontrolled.push({ ...action.payload, timestamp: Date.now() })
-      state.lastAddedTimestamp =Date.now()
+      const timestamp = Date.now()
+      state.uncontrolled.push({ ...action.payload, timestamp })
+      state.lastAddedTimestamp =timestamp
     },
     addControlledData: (state, action: PayloadAction<FormData>) => {
-      state.controlled.push({...action.payload, timestamp: Date.now()})
-      state.lastAddedTimestamp = Date.now();
+      const timestamp = Date.now()
+      state.controlled.push({...action.payload, timestamp})
+      state.lastAddedTimestamp = timestamp
+    },
+    resetLastAddedTimestamp: (state) => {
+      state.lastAddedTimestamp = null; 
     },
   },
 })
 
-export const { addControlledData, addUncontrolledData } = formSlice.actions
+export const { addControlledData, addUncontrolledData, resetLastAddedTimestamp } = formSlice.actions
 export default formSlice.reducer
