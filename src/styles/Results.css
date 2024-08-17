@@ -1,44 +1,36 @@
 td {
-    border: 1px solid rgb(193, 193, 193);
-    padding: 8px;
-}
-  
-  .customers tr:hover {background-color: #ddd;}
-  
-  .customers th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #057e52e6;
-    color: white;
-  }
-
-  .customers{
-    width: 100%;
-  }
-
-
-
-  .table_img{
-
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-left: 50px;
-  }
-
-  tr{
-    transition: 0.5s ease
-
-  }
-
-  .newItem_added{
-    background: rgba(3, 199, 3, 0.6);
-    color: white;  
+  border: 1px solid rgb(193, 193, 193);
+  padding: 8px;
 }
 
+.customers tr:hover {
+  background-color: #ddd;
+}
 
+.customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #057e52e6;
+  color: white;
+}
 
-  
-  
-  
+.customers {
+  width: 100%;
+}
+
+.table_img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-left: 50px;
+}
+
+tr {
+  transition: 0.5s ease;
+}
+
+.newItem_added {
+  background: rgba(3, 199, 3, 0.6);
+  color: white;
+}

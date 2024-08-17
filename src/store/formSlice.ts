@@ -10,20 +10,40 @@ export interface FormData {
   terms?: boolean
   picture?: string | undefined
   country: string
-  timestamp?:  number 
+  timestamp?: number
 }
 
 interface FormState {
   uncontrolled: FormData[]
   controlled: FormData[]
   countries: string[]
-  lastAddedTimestamp: number | null; 
+  lastAddedTimestamp: number | null
 }
 
 const initialState: FormState = {
   uncontrolled: [],
   controlled: [],
-  countries: ['USA', 'Canada', 'Mexico', 'UK', 'Germany', 'France'],
+  countries: [
+    'USA',
+    'Canada',
+    'Mexico',
+    'UK',
+    'Germany',
+    'France',
+    'Uzbekistan',
+    'Kazakhistan',
+    'Kirgizistan',
+    'Georgia',
+    'Belarus',
+    'Ukrain',
+    'Russia',
+    'China',
+    'Japan',
+    'India',
+    'Brazil',
+    'Australia',
+    'South Africa',
+  ],
   lastAddedTimestamp: null,
 }
 
@@ -34,18 +54,22 @@ const formSlice = createSlice({
     addUncontrolledData: (state, action: PayloadAction<FormData>) => {
       const timestamp = Date.now()
       state.uncontrolled.push({ ...action.payload, timestamp })
-      state.lastAddedTimestamp =timestamp
+      state.lastAddedTimestamp = timestamp
     },
     addControlledData: (state, action: PayloadAction<FormData>) => {
       const timestamp = Date.now()
-      state.controlled.push({...action.payload, timestamp})
+      state.controlled.push({ ...action.payload, timestamp })
       state.lastAddedTimestamp = timestamp
     },
     resetLastAddedTimestamp: (state) => {
-      state.lastAddedTimestamp = null; 
+      state.lastAddedTimestamp = null
     },
   },
 })
 
-export const { addControlledData, addUncontrolledData, resetLastAddedTimestamp } = formSlice.actions
+export const {
+  addControlledData,
+  addUncontrolledData,
+  resetLastAddedTimestamp,
+} = formSlice.actions
 export default formSlice.reducer

@@ -3,33 +3,33 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../store'
 import { resetLastAddedTimestamp } from '../store/formSlice'
 import '../styles/Results.css'
+import * as React from 'react'
 
 export const ControlledForm = () => {
   const dispatch = useDispatch()
   const controlled = useSelector((state: RootState) => state.form.controlled)
-  const lastAddedTimestamp = useSelector((state: RootState) => state.form.lastAddedTimestamp);
-  const [highlightedIndex, setHighlightedIndex] = useState<number | null>(null);
-
-
+  const lastAddedTimestamp = useSelector(
+    (state: RootState) => state.form.lastAddedTimestamp,
+  )
+  const [highlightedIndex, setHighlightedIndex] = useState<number | null>(null)
 
   useEffect(() => {
     if (lastAddedTimestamp) {
-      const index = controlled.findIndex(item => {
+      const index = controlled.findIndex((item) => {
         if (item.timestamp !== undefined) {
-          return new Date(item.timestamp).getTime() === lastAddedTimestamp;
+          return new Date(item.timestamp).getTime() === lastAddedTimestamp
         }
-        return false;
-      });
+        return false
+      })
 
-      setHighlightedIndex(index);
+      setHighlightedIndex(index)
       const timeout = setTimeout(() => {
-        setHighlightedIndex(null);
+        setHighlightedIndex(null)
         dispatch(resetLastAddedTimestamp())
-      }, 5000);
-      return () => clearTimeout(timeout);
+      }, 5000)
+      return () => clearTimeout(timeout)
     }
   }, [lastAddedTimestamp, controlled, dispatch])
-  
 
   return (
     <table className="customers">
@@ -43,10 +43,12 @@ export const ControlledForm = () => {
       </tr>
       {controlled.map((item, index) => {
         return (
-          <tr key={index} className={`${highlightedIndex === index ? 'newItem_added' : ''}`}>
-            <td >
-
-              <img className='table_img' src={item.picture} alt="picture" />
+          <tr
+            key={index}
+            className={`${highlightedIndex === index ? 'newItem_added' : ''}`}
+          >
+            <td>
+              <img className="table_img" src={item.picture} alt="picture" />
             </td>
             <td>{item.name}</td>
             <td>{item.age}</td>

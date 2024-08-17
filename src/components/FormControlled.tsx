@@ -6,6 +6,7 @@ import { validationSchema } from '../validation'
 import { RootState } from '../store'
 import { useNavigate } from 'react-router'
 import '../styles/Form.css'
+import * as React from 'react'
 
 interface RawFormData {
   name: string
