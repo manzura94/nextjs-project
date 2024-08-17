@@ -10,18 +10,21 @@ export interface FormData {
   terms?: boolean
   picture?: string | undefined
   country: string
+  timestamp?:  number 
 }
 
 interface FormState {
   uncontrolled: FormData[]
   controlled: FormData[]
   countries: string[]
+  lastAddedTimestamp: number | null; 
 }
 
 const initialState: FormState = {
   uncontrolled: [],
   controlled: [],
   countries: ['USA', 'Canada', 'Mexico', 'UK', 'Germany', 'France'],
+  lastAddedTimestamp: null,
 }
 
 const formSlice = createSlice({
@@ -29,10 +32,12 @@ const formSlice = createSlice({
   initialState,
   reducers: {
     addUncontrolledData: (state, action: PayloadAction<FormData>) => {
-      state.uncontrolled.push(action.payload)
+      state.uncontrolled.push({ ...action.payload, timestamp: Date.now() })
+      state.lastAddedTimestamp =Date.now()
     },
     addControlledData: (state, action: PayloadAction<FormData>) => {
-      state.controlled.push(action.payload)
+      state.controlled.push({...action.payload, timestamp: Date.now()})
+      state.lastAddedTimestamp = Date.now();
     },
   },
 })

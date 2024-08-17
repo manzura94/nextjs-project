@@ -1,4 +1,4 @@
- td,  th {
+td {
     border: 1px solid rgb(193, 193, 193);
     padding: 8px;
 }
@@ -26,6 +26,16 @@
     border-radius: 50%;
     margin-left: 50px;
   }
+
+  tr{
+    transition: 0.5s ease
+
+  }
+
+  .newItem_added{
+    background: rgba(3, 199, 3, 0.6);
+    color: white;  
+}
 
 
 
