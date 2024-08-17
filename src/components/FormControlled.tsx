@@ -1,3 +1,4 @@
+import * as React from 'react'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { addControlledData, FormData } from '../store/formSlice'
@@ -6,7 +7,6 @@ import { validationSchema } from '../validation'
 import { RootState } from '../store'
 import { useNavigate } from 'react-router'
 import '../styles/Form.css'
-import * as React from 'react'
 
 interface RawFormData {
   name: string
@@ -38,7 +38,7 @@ export const FormControlled = () => {
     resolver: yupResolver(validationSchema),
     defaultValues: {
       name: '',
-      age: 0,
+      age: undefined,
       email: '',
       password: '',
       confirmPassword: '',
@@ -89,7 +89,13 @@ export const FormControlled = () => {
               <label htmlFor="name" className="form_label">
                 Name:
               </label>
-              <input type="text" {...field} className="form_input" id="name" />
+              <input
+                type="text"
+                {...field}
+                className="form_input"
+                id="name"
+                autoComplete="family-name"
+              />
             </div>
           )}
         />
@@ -101,7 +107,13 @@ export const FormControlled = () => {
               <label className="form_label" htmlFor="age">
                 Age:
               </label>
-              <input type="number" {...field} className="form_input" id="age" />
+              <input
+                type="number"
+                {...field}
+                className="form_input"
+                id="age"
+                autoComplete="age"
+              />
               {errors.age && (
                 <span className="form_error">{errors.age.message}</span>
               )}
@@ -121,6 +133,7 @@ export const FormControlled = () => {
                 {...field}
                 className="form_input"
                 id="email"
+                autoComplete="email"
               />
               {errors.email && (
                 <span className="form_error">{errors.email.message}</span>
@@ -141,6 +154,7 @@ export const FormControlled = () => {
                 {...field}
                 className="form_input"
                 id="password"
+                autoComplete="new-password"
               />
               {errors.password && (
                 <span className="form_error">{errors.password.message}</span>
@@ -161,6 +175,7 @@ export const FormControlled = () => {
                 {...field}
                 className="form_input"
                 id="confirmPassword"
+                autoComplete="new-password"
               />
               {errors.confirmPassword && (
                 <span className="form_error">
@@ -178,7 +193,7 @@ export const FormControlled = () => {
               <label htmlFor="gender" className="form_label">
                 Gender:
               </label>
-              <select id="gender" {...field}>
+              <select id="gender" {...field} autoComplete="sex">
                 <option value="">Select Gender</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
@@ -206,6 +221,7 @@ export const FormControlled = () => {
                 list="country-list"
                 {...field}
                 className="form_input"
+                autoComplete="country-name"
               />
               <datalist id="country-list">
                 {countries.map((country) => (
@@ -229,6 +245,7 @@ export const FormControlled = () => {
                   id="picture"
                   type="file"
                   accept="image/png, image/jpeg"
+                  autoComplete="photo"
                   onChange={(e) => {
                     field.onChange(e.target.files)
                   }}

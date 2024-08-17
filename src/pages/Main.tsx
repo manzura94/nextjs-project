@@ -27,7 +27,7 @@ export const Main = () => {
               <ControlledForm />
             </div>
           ) : (
-            <p className="form_paragraph">No controlled form available yet</p>
+            <p className="form_paragraph">No information available yet</p>
           )}
         </div>
         <div
@@ -40,7 +40,7 @@ export const Main = () => {
               <UncontrolledForm />
             </div>
           ) : (
-            <p className="form_paragraph">No uncontrolled form available yet</p>
+            <p className="form_paragraph">No information available yet</p>
           )}
         </div>
       </div>

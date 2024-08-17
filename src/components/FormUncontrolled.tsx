@@ -158,7 +158,7 @@ export const FormUncontrolled = () => {
             id="confirmPassword"
             ref={confirmPasswordRef}
             name="confirmPassword"
-            autoComplete="new-password"
+            autoComplete="confirm-password"
             className="form_input"
           />
           {errors.confirmPassword && (

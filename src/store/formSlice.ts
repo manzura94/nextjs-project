@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface FormData {
   name: string
-  age: number
+  age: number | undefined
   email: string
   password: string
   confirmPassword: string
@@ -35,7 +35,7 @@ const initialState: FormState = {
     'Kirgizistan',
     'Georgia',
     'Belarus',
-    'Ukrain',
+    'Ukraine',
     'Russia',
     'China',
     'Japan',
