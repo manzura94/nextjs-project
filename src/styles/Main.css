@@ -1,0 +1,34 @@
+.main_container {
+  text-align: left;
+  width: 100%;
+  max-width: 1240px;
+}
+
+.form_wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.form {
+  border: 1px solid rgba(128, 128, 128, 0.447);
+  height: 100%;
+  width: 100%;
+  padding: 20px;
+  border-radius: 40px;
+  cursor: pointer;
+}
+
+.form:hover {
+  transition: border 0.3s ease;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.form_title {
+  align-self: center;
+  text-align: center;
+}
+
+.form_paragraph {
+  text-align: center;
+}
